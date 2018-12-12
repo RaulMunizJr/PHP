@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %} 
+    Steps List
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="../../../public/style.css">
+{% endblock %}
+
+
+{% block head %}
+    <div class="page-header">
+        <h1>The Best Recipes</h1>
+    </div>  
+{% endblock %}
+
+
+
+{% block content %}
+<div class="row" >
+    <div class="col-md-8">                     <!-- . recipe name tag -->
+        <h2>Mmm...<span id="{{recipe.getId()}}" class="recipe_name">{{recipe.getName()}}</span></h2>
+        <p><label>Description:</label> {{recipe.getDescription()}}</p>
+        <p><label>Preperation Time: </label>{{recipe.getPrepTime()}}</p>
+        <p><label>Total Time: </label>{{recipe.getTotalTime()}}</p>
+            <!-- . steps list tag -->
+        <ul class="steps_list" id="sortable">
+            {% for s in steps %}
+              <!-- . step tag -->
+            <li class="step" id="{{s.getId()}}">{{s.getDescription()}}</li>
+            {% endfor %}
+                  <!-- . add button -->
+            <button class= "add_btn" value="+">+</button>
+        </ul>
+
+        <div align="center">
+            <a href="javascript:window.location.href=window.location.href">Enter</a>
+        </div>
+        <br><br>
+        <div>
+            <a href="{{base_url()}}">Back</a>
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <img style="height:350px" style="width:350px" src={{recipe.getImageUrl()}}>
+    </div>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+<script src="{{base_url()}}/../scripts/jscripts.js"></script>
+<script>var baseurl = "{{base_url()}}";</script>
+{% endblock %}

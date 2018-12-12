@@ -1,0 +1,22 @@
+<html>
+
+        <head>
+          <title>{% block title %}{% endblock %}</title>
+                 {% block styles %} {% endblock %}
+        </head>
+
+        <body>
+          <div class="container">
+            <div>{% block head %} {% endblock %}</div>
+            
+            {% block nav %}{% endblock %} <br><br>  
+            
+            {% block content %} {% endblock %}
+
+            {% block scripts %} {% endblock %}
+
+          </div>
+          
+        </body>
+</html>
+    
