@@ -165,3 +165,212 @@ $people = array(
 echo $people['online'][0]; //Outputs "David"
 echo $people['away'][1]; //Outputs "Daniel"
 ```
+- Elseif Statement
+```
+<?php
+$age = 21;
+
+if ($age<=13) {
+   echo "Child.";
+} elseif ($age>13 && $age<19) {
+   echo "Teenager";
+} else {
+   echo "Adult";
+}
+
+//Outputs "Adult"
+?>
+```
+- foreach loop
+```
+foreach (array as $value) {
+  code to be executed;
+}
+//or
+foreach (array as $key => $value) {
+   code to be executed;
+}
+
+/***************************************/
+
+$names = array("John", "David", "Amy");
+foreach ($names as $name) {
+   echo $name.'<br />';
+}
+
+// John
+// David
+// Amy
+```
+- Include & Require
+```
+// header.php
+<?php
+  echo '<h1>Welcome</h1>';
+?>
+
+//other page
+<html>
+  <body>
+
+  <?php include 'header.php'; ?>
+
+  <p>Some text.</p>
+  <p>Some text.</p>
+  </body>
+</html>
+
+//The require statement is identical to include, the exception being that, upon failure, it produces a fatal error. 
+//When a file is included using the include statement, but PHP is unable to find it, the script continues to execute.
+```
+- functions
+```
+function sayHello() {
+  echo "Hello!";
+}
+
+sayHello(); //call the function
+
+//Outputs "Hello!"
+
+/*********************************/
+
+function multiplyByTwo($number) {
+  $answer = $number * 2;
+  echo $answer;
+}
+multiplyByTwo(3);
+//Outputs 6
+
+function multiply($num1, $num2) {
+  echo $num1 * $num2;
+}
+multiply(3, 6);
+//Outputs 18
+
+/**********************************/
+
+function setCounter($num=10) {
+   echo "Counter is ".$num;
+}
+setCounter(42);  //Counter is 42
+setCounter();  //Counter is 10
+```
+- Predefined Variables
+
+A superglobal is a predefined variable that is always accessible, regardless of scope. You can access the PHP superglobals through any function, class, or file.
+
+PHP's superglobal variables are $_SERVER, $GLOBALS, $_REQUEST, $_POST, $_GET, $_FILES, $_ENV, $_COOKIE, $_SESSION.
+```
+//$_SERVER is an array that includes information such as headers, paths, and script locations. The entries in this array are //created by the web server.
+//$_SERVER['SCRIPT_NAME'] returns the path of the current script:
+
+<?php
+echo $_SERVER['SCRIPT_NAME'];
+//Outputs "/somefile.php"
+?>
+/****************************/
+<?php
+echo $_SERVER['HTTP_HOST'];
+//Outputs "localhost"
+?>
+/****************************/
+//Create a config.php file, that holds the path to your images:
+<?php
+$host = $_SERVER['HTTP_HOST'];
+$image_path = $host.'/images/';
+?>
+
+<?php
+require 'config.php';
+echo '<img src="'.$image_path.'header.png" />';
+?>
+```
+- Forms
+
+The purpose of the PHP superglobals $_GET and $_POST is to collect data that has been entered into a form.
+```
+<form action="first.php" method="post">
+  <p>Name: <input type="text" name="name" /></p>
+  <p>Age: <input type="text" name="age" /></p>
+  <p><input type="submit" name="submit" value="Submit" /></p>
+</form>
+/**************************************************************/
+<html>
+<body>
+
+Welcome <?php echo $_POST["name"]; ?><br />
+Your age: <?php echo $_POST["age"]; ?>
+
+</body>
+</html>
+```
+- Get & Post
+
+POST is the preferred method for sending form data.
+
+Information sent via a form using the GET method is visible to everyone (all variable names and values are displayed in the URL)
+```
+<form action="actionGet.php" method="get">
+  Name: <input type="text" name="name" /><br /><br />
+  Age: <input type="text" name="age" /><br /><br />
+  <input type="submit" name="submit" value="Submit" />
+</form>
+
+//actionGet.php
+<?php
+echo "Hi ".$_GET['name'].". ";
+echo "You are ".$_GET['age']." years old.";
+?>
+```
+GET should NEVER be used for sending passwords or other sensitive information!
+When using POST or GET, proper validation of form data through filtering and processing is vitally important to protect your form from hackers and exploits!
+
+- Session
+
+Using a session, you can store information in variables, to be used across multiple pages.
+Information is not stored on the user's computer, as it is with cookies.
+By default, session variables last until the user closes the browser.
+```
+//A session is started using the session_start() function.
+//Use the PHP global $_SESSION to set session variables.
+<?php
+// Start the session
+session_start();
+
+$_SESSION['color'] = "red";
+$_SESSION['name'] = "John";
+?>
+
+//Another page can be created that can access the session variables we set in the previous page:
+<?php
+// Start the session
+session_start();
+?>
+<!DOCTYPE html>
+<html>
+<body>
+<?php
+echo "Your name is " . $_SESSION['name'];
+// Outputs "Your name is John"
+?>
+</body>
+</html>
+
+//All global session variables can be removed manually by using session_unset(). 
+//You can also destroy the session with session_destroy().
+```
+
+- Cookies
+
+Cookies are often used to identify the user. A cookie is a small file that the server embeds on the user's computer. Each time the same computer requests a page through a browser, it will send the cookie, too. With PHP, you can both create and retrieve cookie values.
+```
+setcookie(name, value, expire, path, domain, secure, httponly);
+```
+1. name: Specifies the cookie's name
+2. value: Specifies the cookie's value
+3. expire: Specifies (in seconds) when the cookie is to expire. The value: time()+86400*30, will set the cookie to expire in 30 days. If this parameter is omitted or set to 0, the cookie will expire at the end of the session (when the browser closes). Default is 0.
+4. path: Specifies the server path of the cookie. If set to "/", the cookie will be available within the entire domain. If set to "/php/", the cookie will only be available within the php directory and all sub-directories of php. The default value is the current directory in which the cookie is being set.
+5. domain: Specifies the cookie's domain name. To make the cookie available on all subdomains of example.com, set the domain to "example.com".
+6. secure: Specifies whether or not the cookie should only be transmitted over a secure, HTTPS connection. TRUE indicates that the cookie will only be set if a secure connection exists. Default is FALSE.
+7. httponly: If set to TRUE, the cookie will be accessible only through the HTTP protocol (the cookie will not be accessible to scripting languages). Using httponly helps reduce identity theft using XSS attacks. Default is FALSE.
