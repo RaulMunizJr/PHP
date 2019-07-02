@@ -374,3 +374,52 @@ setcookie(name, value, expire, path, domain, secure, httponly);
 5. domain: Specifies the cookie's domain name. To make the cookie available on all subdomains of example.com, set the domain to "example.com".
 6. secure: Specifies whether or not the cookie should only be transmitted over a secure, HTTPS connection. TRUE indicates that the cookie will only be set if a secure connection exists. Default is FALSE.
 7. httponly: If set to TRUE, the cookie will be accessible only through the HTTP protocol (the cookie will not be accessible to scripting languages). Using httponly helps reduce identity theft using XSS attacks. Default is FALSE.
+```
+//The name parameter is the only one that's required. All of the other parameters are optional.
+
+//The following example creates a cookie named "user" with the value "John". The cookie will expire after 30 days, which is //written as 86,400 * 30, in which 86,400 seconds = one day. The '/' means that the cookie is available throughout the entire //website.
+
+//We then retrieve the value of the cookie "user" (using the global variable $_COOKIE). We also use the isset() function to //find out if the cookie is set:
+
+<?php
+$value = "John";
+setcookie("user", $value, time() + (86400 * 30), '/'); 
+
+if(isset($_COOKIE['user'])) {
+  echo "Value is: ". $_COOKIE['user'];
+}
+//Outputs "Value is: John"
+?>
+
+//The setcookie() function must appear BEFORE the <html> tag.
+//The value of the cookie is automatically encoded when the cookie is sent, and is automatically decoded when it's received. //Nevertheless, NEVER store sensitive information in cookies.
+```
+
+### OOP
+```
+class Person {
+  public $age; //property
+  public function speak() { //method
+    echo "Hi!"
+  }
+}
+$p1 = new Person(); //instantiate an object
+$p1->age = 23; // assignment 
+echo $p1->age; // 23
+$p1->speak(); // Hi!
+
+/*******************************************/
+
+class Dog {
+  public $legs=4;
+  public function display() {
+    echo $this->legs;
+  }
+}
+$d1 = new Dog();
+$d1->display(); //4
+
+$d2 = new Dog();
+$d2->legs = 2;
+$d2->display(); //2
+```
