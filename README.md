@@ -423,3 +423,110 @@ $d2 = new Dog();
 $d2->legs = 2;
 $d2->display(); //2
 ```
+- Constructor & Destructor
+
+PHP provides the constructor magic method __construct(), which is called automatically whenever a new object is instantiated. 
+```
+class Person {
+  public function __construct() {
+    echo "Object created";
+  }
+}
+$p = new Person();
+/**********************************/
+class Person {
+  public $name;
+  public $age;
+  public function __construct($name, $age) {
+    $this->name = $name;
+    $this->age = $age;
+  }
+}
+$p = new Person("David", 42);
+
+/*************************************/
+
+class Person {
+  public function __destruct() {
+    echo "Object destroyed";
+  }
+}
+$p = new Person();
+```
+
+- Inheritance
+```
+class Animal {
+  public $name;
+  public function hi() {
+    echo "Hi from Animal";
+  }
+}
+class Dog extends Animal {
+}
+
+$d = new Dog();
+$d->hi();
+```
+
+- Interfaces
+
+An interface specifies a list of methods that a class must implement. However, the interface itself does not contain any method implementations. This is an important aspect of interfaces because it allows a method to be handled differently in each class that uses the interface.
+```
+//The interface keyword defines an interface.
+//The implements keyword is used in a class to implement an interface.
+
+<?php
+interface AnimalInterface {
+  public function makeSound();
+}
+
+class Dog implements AnimalInterface {
+  public function makeSound() {
+    echo "Woof! <br />";
+  }
+}
+class Cat implements AnimalInterface {
+  public function makeSound() {
+    echo "Meow! <br />";
+  }
+}
+
+$myObj1 = new Dog();
+$myObj1->makeSound();
+
+$myObj2 = new Cat();
+$myObj2->makeSound();
+?>
+
+//A class can implement multiple interfaces. More than one interfaces can be specified by separating them with commas. For //example:
+class Demo implements AInterface, BInterface, CInterface {
+  // Functions declared in interfaces must be defined here
+}
+```
+- Abstract Classes
+
+Abstract classes can be inherited but they cannot be instantiated. 
+They offer the advantage of being able to contain both methods with definitions and abstract methods that aren't defined until they are inherited
+```
+<?php
+abstract class Fruit { 
+  private $color; 
+    
+  abstract public function eat(); 
+    
+  public function setColor($c) { 
+    $this->color = $c; 
+  } 
+} 
+
+class Apple extends Fruit {
+  public function eat() {
+    echo "Omnomnom";
+  }
+}
+
+$obj = new Apple();
+$obj->eat();
+?>
+```
